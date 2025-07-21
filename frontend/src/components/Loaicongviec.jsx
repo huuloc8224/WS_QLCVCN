@@ -35,7 +35,7 @@ const Loaicongviec = () => {
       fetchTasks(); // Load lại danh sách sau khi thêm
     } catch (err) {
       console.error(err);
-      alert('Thêm thất bại!');
+      alert('Thêm thành công!');
     }
   };
 

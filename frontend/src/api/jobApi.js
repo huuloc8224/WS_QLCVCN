@@ -2,14 +2,14 @@ import axiosClient from './axiosClient';
 
 const jobApi = {
   // Lấy toàn bộ công việc (của user hiện tại)
-  getAll: () => axiosClient.get('/api/job/all'),
+  getAll: () => axiosClient.get('/job/all'),
 
   // Lọc công việc theo typejob ID (nếu cần dùng)
   getByTypejobId: (typejob) => {
     if (!typejob || isNaN(parseInt(typejob, 10))) {
       throw new Error('Typejob ID must be a valid number');
     }
-    return axiosClient.get('/api/job', {
+    return axiosClient.get('/job', {
       params: { typejob }
     });
   },
@@ -19,7 +19,7 @@ const jobApi = {
     if (!name || typeof name !== 'string') {
       throw new Error('Typejob name must be a non-empty string');
     }
-    return axiosClient.get(`/api/job/typejob/name/${name}`);
+    return axiosClient.get(`/job/typejob/name/${name}`);
   },
 
   // Tạo mới công việc
@@ -44,7 +44,7 @@ const jobApi = {
       throw new Error('Invalid due date');
     }
 
-    return axiosClient.post('/api/job/create', {
+    return axiosClient.post('/job/create', {
       title,
       description,
       status,
@@ -78,7 +78,7 @@ const jobApi = {
       throw new Error('Invalid due date');
     }
 
-    return axiosClient.put(`/api/job/${id}`, {
+    return axiosClient.put(`/job/${id}`, {
       title,
       description,
       status,
@@ -93,7 +93,7 @@ const jobApi = {
     if (!id || isNaN(parseInt(id, 10))) {
       throw new Error('Invalid job ID');
     }
-    return axiosClient.delete(`/api/job/${id}`);
+    return axiosClient.delete(`/job/${id}`);
   }
 };
 
