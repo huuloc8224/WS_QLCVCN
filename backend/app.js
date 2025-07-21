@@ -14,7 +14,7 @@ const cors = require('cors');
 
 // Cho phép frontend từ http://localhost (Nginx) và http://localhost:5173 (dev)
 app.use(cors({
-  origin: ['http://localhost', 'http://localhost:5173'],
+  origin: ['http://localhost', 'http://localhost:5173', 'https://qlcvcn.netlify.app'],
   credentials: true,
 }));
 
