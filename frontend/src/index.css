@@ -1,0 +1,4 @@
+@import "tailwindcss";
+html {
+  overflow-y: scroll; /* ép luôn hiện scrollbar, giữ layout không lệch */
+}

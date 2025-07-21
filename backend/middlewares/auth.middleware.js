@@ -1,0 +1,23 @@
+//backend/middlewares/auth.middleware.js
+
+const jwt = require('jsonwebtoken');
+
+module.exports = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  
+  // Kiểm tra có Authorization header và bắt đầu bằng 'Bearer '
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  // Cắt phần 'Bearer ' để lấy token thật
+  const token = authHeader.split(' ')[1];
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (err) {
+    return res.status(403).json({ message: 'Invalid token' });
+  }
+};
