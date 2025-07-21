@@ -12,11 +12,12 @@ connectDB();
 
 const cors = require('cors');
 
-// Cho phép frontend từ http://localhost (Nginx) và http://localhost:5173 (dev)
 app.use(cors({
   origin: ['http://localhost', 'http://localhost:5173', 'https://qlcvcn.netlify.app'],
   credentials: true,
 }));
+
+app.options('*', cors()); 
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
