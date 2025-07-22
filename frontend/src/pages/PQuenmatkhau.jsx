@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import logo from '../assets/l2dd2.jpg'; // Import logo
+import authApi from '../api/authApi';
 
 const PQuenmatkhau = () => {
   const [email, setEmail] = useState('');

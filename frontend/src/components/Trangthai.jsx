@@ -3,12 +3,9 @@ import { PieChart, Pie, Cell } from "recharts";
 import jobApi from "../api/jobApi";
 
 import {
-  DocumentIcon,
   ArrowPathIcon,
   CheckCircleIcon,
-  CircleStackIcon,
-  RadioIcon,
-  MinusCircleIcon, // ← THÊM DÒNG NÀY VÀO
+  MinusCircleIcon,
 } from "@heroicons/react/24/solid";
 
 const COLORS = ["#FF9800", "#2196F3", "#E91E63"];
@@ -23,7 +20,7 @@ const Trangthai = () => {
     const fetchData = async () => {
       try {
         const res = await jobApi.getAll();
-        setWorkItems(res.data); // Dữ liệu từ backend
+        setWorkItems(res.data);
       } catch (err) {
         console.error("Lỗi khi lấy dữ liệu công việc:", err);
       }
@@ -50,7 +47,6 @@ const Trangthai = () => {
     };
   }, []);
 
-  // Tổng số công việc và phân loại theo status
   const total = workItems.length;
   const toDo = workItems.filter((item) => item.status === "todo").length;
   const inProgress = workItems.filter((item) => item.status === "in_progress").length;
@@ -111,22 +107,25 @@ const Trangthai = () => {
 
       <div className="space-y-2 text-sm">
         {[
-          { icon: MinusCircleIcon, text: 'Chưa thực hiện', value: toDo, color: 'text-orange-600' },
-          { icon: ArrowPathIcon, text: 'Đang thực hiện', value: inProgress, color: 'text-blue-600' },
-          { icon: CheckCircleIcon, text: 'Đã hoàn thành', value: done, color: 'text-pink-600' },
-        ].map(({ icon: Icon, text, value, color }, i) => (
-          <div
-            key={i}
-            className={`flex items-center gap-2 cursor-pointer max-w-fit hover:opacity-80 ${color}`}
-            onMouseEnter={() => setActiveIndex(i)}
-            onMouseLeave={() => setActiveIndex(null)}
-          >
-            <Icon className="w-5 h-5" />
-            <span>
-              {text}: {value}
-            </span>
-          </div>
-        ))}
+          { icon: MinusCircleIcon, text: "Chưa thực hiện", value: toDo, color: "text-orange-600" },
+          { icon: ArrowPathIcon, text: "Đang thực hiện", value: inProgress, color: "text-blue-600" },
+          { icon: CheckCircleIcon, text: "Đã hoàn thành", value: done, color: "text-pink-600" },
+        ].map((item, i) => {
+          const Icon = item.icon;
+          return (
+            <div
+              key={i}
+              className={`flex items-center gap-2 cursor-pointer max-w-fit hover:opacity-80 ${item.color}`}
+              onMouseEnter={() => setActiveIndex(i)}
+              onMouseLeave={() => setActiveIndex(null)}
+            >
+              <Icon className="w-5 h-5" />
+              <span>
+                {item.text}: {item.value}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
