@@ -31,7 +31,7 @@ const PQuenmatkhau = () => {
           />
         </div>
 
-        <h2 className="text-2xl font-bold text-blue-700 text-center mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
           Quên mật khẩu
         </h2>
 

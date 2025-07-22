@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import logo from '../assets/l2dd2.jpg';
 import {
   ArrowRightOnRectangleIcon,
@@ -13,6 +13,7 @@ const Menutrai = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
   const { userName, setUserName } = useContext(UserContext);
 
   React.useEffect(() => {
@@ -35,6 +36,8 @@ const Menutrai = () => {
     navigate('/');
   };
 
+  const isActive = (path) => location.pathname === path;
+
   return (
     <div className="fixed top-0 left-0 w-full h-16 bg-gradient-to-r from-blue-900 to-blue-600 text-white shadow z-50 px-6 flex items-center justify-between">
       {/* Logo */}
@@ -45,10 +48,38 @@ const Menutrai = () => {
 
       {/* Menu Navigation */}
       <div className="flex gap-6 text-sm font-medium">
-        <button onClick={() => navigate('/tongquan')} className="hover:text-yellow-300 transition">Tổng Quan</button>
-        <button onClick={() => navigate('/loaicongviec')} className="hover:text-yellow-300 transition">Loại Công Việc</button>
-        <button onClick={() => navigate('/congviec')} className="hover:text-yellow-300 transition">Công Việc</button>
-        <button onClick={() => navigate('/lichsu')} className="hover:text-yellow-300 transition">Nhật Ký Thay Đổi</button>
+        <button
+          onClick={() => navigate('/tongquan')}
+          className={`transition ${
+            isActive('/tongquan') ? 'text-yellow-300 font-semibold underline' : 'hover:text-yellow-300'
+          }`}
+        >
+          Tổng Quan
+        </button>
+        <button
+          onClick={() => navigate('/loaicongviec')}
+          className={`transition ${
+            isActive('/loaicongviec') ? 'text-yellow-300 font-semibold underline' : 'hover:text-yellow-300'
+          }`}
+        >
+          Loại Công Việc
+        </button>
+        <button
+          onClick={() => navigate('/congviec')}
+          className={`transition ${
+            isActive('/congviec') ? 'text-yellow-300 font-semibold underline' : 'hover:text-yellow-300'
+          }`}
+        >
+          Công Việc
+        </button>
+        <button
+          onClick={() => navigate('/lichsu')}
+          className={`transition ${
+            isActive('/lichsu') ? 'text-yellow-300 font-semibold underline' : 'hover:text-yellow-300'
+          }`}
+        >
+          Nhật Ký Thay Đổi
+        </button>
       </div>
 
       {/* User Dropdown */}
