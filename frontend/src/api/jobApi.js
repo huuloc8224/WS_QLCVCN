@@ -1,15 +1,16 @@
+// frontend/src/api/jobApi.js
 import axiosClient from './axiosClient';
 
 const jobApi = {
-  // Lấy toàn bộ công việc (của user hiện tại)
-  getAll: () => axiosClient.get('/job/all'),
+  // Lấy toàn bộ công việc
+  getAll: () => axiosClient.get('/job/jobs'),
 
-  // Lọc công việc theo typejob ID (nếu cần dùng)
+  // Lọc công việc theo typejob ID
   getByTypejobId: (typejob) => {
     if (!typejob || isNaN(parseInt(typejob, 10))) {
       throw new Error('Typejob ID must be a valid number');
     }
-    return axiosClient.get('/job', {
+    return axiosClient.get('/job/jobs/filter', {
       params: { typejob }
     });
   },
@@ -19,12 +20,11 @@ const jobApi = {
     if (!name || typeof name !== 'string') {
       throw new Error('Typejob name must be a non-empty string');
     }
-    return axiosClient.get(`/job/typejob/name/${name}`);
+    return axiosClient.get(`/job/jobs/type/name/${name}`);
   },
 
-  // Tạo mới công việc
+  // Tạo công việc mới
   create: ({ title, description, status, typejob, start_date, due_date }) => {
-    // Validate đầu vào
     if (!title || typeof title !== 'string' || title.length > 50) {
       throw new Error('Title must be a string and not exceed 50 characters');
     }
@@ -44,7 +44,7 @@ const jobApi = {
       throw new Error('Invalid due date');
     }
 
-    return axiosClient.post('/job/create', {
+    return axiosClient.post('/job/jobs', {
       title,
       description,
       status,
@@ -78,7 +78,7 @@ const jobApi = {
       throw new Error('Invalid due date');
     }
 
-    return axiosClient.put(`/job/${id}`, {
+    return axiosClient.put(`/job/jobs/${id}`, {
       title,
       description,
       status,
@@ -93,8 +93,8 @@ const jobApi = {
     if (!id || isNaN(parseInt(id, 10))) {
       throw new Error('Invalid job ID');
     }
-    return axiosClient.delete(`/job/${id}`);
-  }
+    return axiosClient.delete(`/job/jobs/${id}`);
+  },
 };
 
 export default jobApi;
