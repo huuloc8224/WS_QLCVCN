@@ -81,9 +81,7 @@ const Loaicongviec = () => {
 
   return (
     <div className="p-6 w-full">
-      <div className="text-2xl font-bold text-blue-800 mb-2">
-        LOẠI CÔNG VIỆC
-      </div>
+      <h2 className="text-2xl font-bold text-blue-900 mb-8">LOẠI CÔNG VIỆC</h2>
       <hr className="border-t-2 border-blue-200 mb-6" />
 
       {/* Form thêm mới */}

@@ -2,6 +2,13 @@ import React, { useEffect, useState } from 'react';
 import CountUp from 'react-countup';
 import jobApi from '../api/jobApi';
 import typejobApi from '../api/typejobApi';
+import {
+  BriefcaseIcon,
+  ClipboardDocumentListIcon,
+  ArrowPathIcon,
+  CheckCircleIcon,
+  MinusCircleIcon,
+} from '@heroicons/react/24/solid'; // Solid để icon đậm và rõ
 
 const Tongquan = () => {
   const [totalJobs, setTotalJobs] = useState(0);
@@ -22,7 +29,6 @@ const Tongquan = () => {
         setTotalJobs(jobs.length);
         setTotalTypes(typeRes.data.data.length);
 
-        // Đếm số lượng theo trạng thái
         const countByStatus = {
           todo: 0,
           in_progress: 0,
@@ -47,28 +53,63 @@ const Tongquan = () => {
     fetchData();
   }, []);
 
-  return (
-    <div className="flex flex-col h-auto p-6">
-      <h2 className="text-2xl font-bold text-blue-800 mb-6">TỔNG QUAN</h2>
+  const cards = [
+    {
+      label: 'Loại công việc',
+      count: totalTypes,
+      icon: BriefcaseIcon,
+      color: 'bg-green-100 text-green-700',
+    },
+    {
+      label: 'Số lượng công việc',
+      count: totalJobs,
+      icon: ClipboardDocumentListIcon,
+      color: 'bg-red-100 text-red-700',
+    },
+    {
+      label: 'Chưa thực hiện',
+      count: todoCount,
+      icon: MinusCircleIcon,
+      color: 'bg-yellow-100 text-yellow-700',
+    },
+    {
+      label: 'Đang thực hiện',
+      count: inProgressCount,
+      icon: ArrowPathIcon,
+      color: 'bg-blue-100 text-blue-700',
+    },
+    {
+      label: 'Đã hoàn thành',
+      count: doneCount,
+      icon: CheckCircleIcon,
+      color: 'bg-pink-100 text-pink-700',
+    },
+  ];
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-        {[
-          { label: 'Loại công việc', count: totalTypes, bg: 'bg-green-600' },
-          { label: 'Số lượng công việc', count: totalJobs, bg: 'bg-red-600' },
-          { label: 'Chưa thực hiện', count: todoCount, bg: 'bg-amber-500' },
-          { label: 'Đang thực hiện', count: inProgressCount, bg: 'bg-blue-500' },
-          { label: 'Đã hoàn thành', count: doneCount, bg: 'bg-pink-600' },
-        ].map((item, index) => (
-          <div
-            key={index}
-            className={`rounded-2xl shadow-md p-4 text-white flex flex-col items-center justify-center hover:scale-105 transform transition-all duration-300 ${item.bg}`}
-          >
-            <p className="text-sm md:text-base">{item.label}</p>
-            <p className="text-xl md:text-2xl font-bold">
-              <CountUp end={item.count} duration={2} />
-            </p>
-          </div>
-        ))}
+  return (
+    <div className="p-6">
+      <h2 className="text-2xl font-bold text-blue-900 mb-8">TỔNG QUAN</h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {cards.map((item, index) => {
+          const Icon = item.icon;
+          return (
+            <div
+              key={index}
+              className="flex items-center justify-between p-5 rounded-xl shadow-sm bg-white hover:shadow-md transition duration-300"
+            >
+              <div>
+                <p className="text-gray-600 text-sm mb-1">{item.label}</p>
+                <p className="text-2xl font-bold">
+                  <CountUp end={item.count} duration={2} />
+                </p>
+              </div>
+              <div className={`w-14 h-14 rounded-full flex items-center justify-center ${item.color}`}>
+                <Icon className="w-7 h-7" />
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
