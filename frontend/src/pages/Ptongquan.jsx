@@ -7,28 +7,22 @@ import Lich from '../components/Lich';
 
 const Ptongquan = () => {
   return (
-    <div className='flex flex-col-2'>
-      <div className='w-[20%] fixed'>
-        <Menutrai />
-      </div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Navbar ngang */}
+      <Menutrai />
 
-      <div className='w-[79.5%] ml-[20%]'>
+      {/* Nội dung chính */}
+      <div className="px-6 py-4 mt-16"> {/* mt-16 = đúng chiều cao của navbar (64px) */}
         <Tongquan />
 
-        <div className="flex gap-4 p-4">
-          <div className="w-1/2">
-            <Trangthai />
-          </div>
-          <div className="w-1/2">
-            <Thongbao />
-          </div>
-          
-        </div>
-        <div className="flex-1 overflow-auto">
-          <Lich />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <Trangthai />
+          <Thongbao />
         </div>
 
-        <div className="h-15" />
+        <div className="mt-6">
+          <Lich />
+        </div>
       </div>
     </div>
   );

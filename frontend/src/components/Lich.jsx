@@ -92,29 +92,64 @@ const Lich = () => {
 
   return (
     <div className="p-6">
-      <div className="flex justify-between items-center mb-4">
-        <button onClick={handlePrevMonth} className="px-2 py-1 bg-gray-200 rounded">←</button>
-        <div className="text-xl font-bold">{months[currentMonth]} - {currentYear}</div>
-        <button onClick={handleNextMonth} className="px-2 py-1 bg-gray-200 rounded">→</button>
+      {/* Header */}
+      <div className="flex justify-between items-center mb-6">
+        <button
+          onClick={handlePrevMonth}
+          className="px-3 py-1 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 transition"
+        >
+          ←
+        </button>
+
+        <div className="text-2xl font-bold text-gray-800">
+          {months[currentMonth]} - {currentYear}
+        </div>
+
+        <button
+          onClick={handleNextMonth}
+          className="px-3 py-1 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 transition"
+        >
+          →
+        </button>
       </div>
 
-      <div className="grid grid-cols-7 border border-gray-400">
+      {/* Grid Calendar */}
+      <div className="grid grid-cols-7 gap-px border border-gray-300 rounded overflow-hidden">
+        {/* Header: Days of week */}
         {daysOfWeek.map((day) => (
-          <div key={day} className="p-2 text-center font-semibold bg-gray-200">{day}</div>
+          <div
+            key={day}
+            className="p-2 text-center font-semibold bg-gray-100 text-gray-700 uppercase text-sm tracking-wide"
+          >
+            {day}
+          </div>
         ))}
 
+        {/* Days */}
         {days.map((week, wi) => (
           <React.Fragment key={wi}>
             {week.map((day, di) => (
-              <div key={di} className="border border-gray-400 h-[80px] p-1 relative text-sm flex flex-col gap-0.5">
-                {day && <div className="text-center text-xs font-medium">{day}</div>}
+              <div
+                key={di}
+                className="border border-gray-200 h-[100px] p-1.5 text-sm bg-white hover:bg-gray-50 transition relative flex flex-col"
+              >
+                {/* Ngày */}
+                {day && (
+                  <div className="text-xs font-semibold text-gray-600 text-right pr-1">
+                    {day}
+                  </div>
+                )}
 
-                <div className="flex flex-col gap-0.5 mt-1 overflow-hidden">
+                {/* Tasks */}
+                <div className="flex flex-col gap-1 mt-1 overflow-hidden">
                   {getTasksForDay(day).map((task) => (
                     <div
                       key={`${task._id}-${day}`}
-                      className="text-[10px] text-white px-1 rounded truncate"
-                      style={{ backgroundColor: mapStatusToColor(task.status) }}
+                      className="text-[11px] text-white px-1.5 py-0.5 rounded-md truncate shadow-sm"
+                      style={{
+                        backgroundColor: mapStatusToColor(task.status),
+                        maxWidth: '100%',
+                      }}
                       title={`${task.title} (${task.start_date?.slice(0, 10)} → ${task.due_date?.slice(0, 10)})`}
                     >
                       {task.title}
@@ -128,6 +163,7 @@ const Lich = () => {
       </div>
     </div>
   );
+
 };
 
 export default Lich;

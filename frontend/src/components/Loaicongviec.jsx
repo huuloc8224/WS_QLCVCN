@@ -81,26 +81,26 @@ const Loaicongviec = () => {
 
   return (
     <div className="p-6 w-full">
-      <div className="text-xl ml-2 mt-2 font-bold text-blue-700">
+      <div className="text-2xl font-bold text-blue-800 mb-2">
         LOẠI CÔNG VIỆC
       </div>
-      <hr className="border-t-2 border-gray-300/30 my-4 mx-4" />
+      <hr className="border-t-2 border-blue-200 mb-6" />
 
       {/* Form thêm mới */}
-      <div className="flex mb-4">
+      <div className="flex flex-wrap items-center gap-2 mb-6">
         <input
           type="text"
-          placeholder="Nhập tên công việc mới"
-          className="border p-2 rounded mr-2 w-[300px]"
+          placeholder="Nhập tên loại công việc mới"
+          className="border border-gray-300 focus:ring-2 focus:ring-blue-400 rounded-lg px-4 py-2 w-[280px] outline-none shadow-sm"
           value={newTaskName}
           onChange={(e) => setNewTaskName(e.target.value)}
           onKeyDown={handleKeyDown}
         />
         <button
           onClick={handleAddTask}
-          className="flex items-center bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow transition-all"
         >
-          <PlusIcon className="w-5 h-5 mr-1" />
+          <PlusIcon className="w-5 h-5" />
           Thêm
         </button>
       </div>
@@ -110,28 +110,32 @@ const Loaicongviec = () => {
         {tasks.map((task) => (
           <div
             key={task._id}
-            className="relative flex items-center justify-center rounded-full bg-gray-100 text-gray-800 font-bold px-4 py-2 hover:shadow-lg hover:bg-gray-200 group"
+            className="relative flex items-center bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium px-4 py-2 rounded-full shadow-sm transition-all group"
           >
             {editingTask?._id === task._id ? (
               <input
                 type="text"
-                className="border rounded-full px-3 py-1 focus:outline-none"
+                className="border border-gray-300 rounded-full px-3 py-1 focus:outline-none text-sm"
                 value={editedName}
                 onChange={(e) => setEditedName(e.target.value)}
               />
             ) : (
               <span
-                onClick={() => navigate(`/congviec?category=${encodeURIComponent(task.name)}`)}
-                className="cursor-pointer hover:underline"
+                onClick={() =>
+                  navigate(`/congviec?category=${encodeURIComponent(task.name)}`)
+                }
+                className="cursor-pointer hover:underline text-sm"
               >
                 {task.name}
               </span>
             )}
-            <div className="absolute right-2 top-1 flex space-x-1 opacity-0 group-hover:opacity-100">
+
+            {/* Action buttons */}
+            <div className="absolute -right-1.5 -top-1.5 flex gap-1 opacity-0 group-hover:opacity-100 transition-all">
               {editingTask?._id === task._id ? (
                 <button
                   onClick={handleSaveEdit}
-                  className="bg-green-500 text-white p-1 rounded-full"
+                  className="bg-green-500 text-white p-1 rounded-full shadow"
                   title="Lưu"
                 >
                   ✅
@@ -140,14 +144,14 @@ const Loaicongviec = () => {
                 <>
                   <button
                     onClick={() => handleEditTask(task)}
-                    className="bg-yellow-400 text-white p-1 rounded-full"
+                    className="bg-yellow-400 hover:bg-yellow-500 text-white p-1 rounded-full shadow"
                     title="Sửa"
                   >
                     <PencilIcon className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => handleDeleteTask(task._id)}
-                    className="bg-red-500 text-white p-1 rounded-full"
+                    className="bg-red-500 hover:bg-red-600 text-white p-1 rounded-full shadow"
                     title="Xóa"
                   >
                     <TrashIcon className="w-4 h-4" />
@@ -160,6 +164,7 @@ const Loaicongviec = () => {
       </div>
     </div>
   );
+
 };
 
 export default Loaicongviec;

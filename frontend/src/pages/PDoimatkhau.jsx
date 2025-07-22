@@ -38,39 +38,45 @@ const PDoimatkhau = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-300">
-      <div className="w-[350px] p-6 bg-white rounded-xl shadow-lg flex flex-col items-center">
-        <div className="w-24 h-24 rounded-full mb-4 overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-blue-50 px-4">
+      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg flex flex-col items-center">
+        
+        <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-blue-300 mb-4">
           <img src={logo} alt="Logo" className="w-full h-full object-cover" />
         </div>
-        <h2 className="text-xl font-semibold mb-4">Đổi mật khẩu</h2>
-        <form onSubmit={handleChangePassword} className="w-full flex flex-col">
+
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">Đổi mật khẩu</h2>
+
+        <form onSubmit={handleChangePassword} className="w-full space-y-4">
           <input
             type="password"
             placeholder="Mật khẩu cũ"
-            className="border border-gray-400 rounded px-3 py-2 w-full mb-3"
+            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={oldPassword}
             onChange={(e) => setOldPassword(e.target.value)}
           />
           <input
             type="password"
             placeholder="Mật khẩu mới"
-            className="border border-gray-400 rounded px-3 py-2 w-full mb-3"
+            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
           />
           <input
             type="password"
             placeholder="Nhập lại mật khẩu mới"
-            className="border border-gray-400 rounded px-3 py-2 w-full mb-4"
+            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={confirmNewPassword}
             onChange={(e) => setConfirmNewPassword(e.target.value)}
           />
+
           <button
             type="submit"
             disabled={loading}
-            className={`bg-blue-500 text-white font-semibold py-2 rounded transition ${
-              loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
+            className={`w-full py-2 text-white font-semibold rounded transition ${
+              loading
+                ? 'bg-blue-400 cursor-not-allowed'
+                : 'bg-blue-500 hover:bg-blue-600'
             }`}
           >
             {loading ? 'Đang xử lý...' : 'Đổi mật khẩu'}

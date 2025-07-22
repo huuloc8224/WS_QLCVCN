@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { PieChart, Pie, Cell } from "recharts";
 import jobApi from "../api/jobApi";
+
 import {
   DocumentIcon,
   ArrowPathIcon,
@@ -67,13 +68,12 @@ const Trangthai = () => {
   };
 
   return (
-    <div className="p-6 rounded-2xl shadow-lg w-full max-w-md bg-white h-full">
-      <h2 className="text-2xl font-bold mb-4 flex justify-center">Trạng thái công việc</h2>
+    <div className="p-6 bg-white rounded-3xl shadow-xl w-full h-full">
+      <h2 className="text-xl font-semibold mb-4 text-center text-gray-800">
+        Trạng thái công việc
+      </h2>
 
-      <div
-        ref={chartRef}
-        className="relative flex items-center justify-center mb-6"
-      >
+      <div ref={chartRef} className="relative flex justify-center items-center mb-6">
         <PieChart width={300} height={250}>
           <Pie
             data={chartData}
@@ -83,8 +83,6 @@ const Trangthai = () => {
             outerRadius={80}
             dataKey="value"
             isAnimationActive={isVisible}
-            animationDuration={1500}
-            animationEasing="ease-out"
           >
             {chartData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index]} />
@@ -92,50 +90,43 @@ const Trangthai = () => {
           </Pie>
         </PieChart>
 
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <div className="absolute text-center">
           {activeIndex !== null ? (
-            <div className="text-2xl font-bold text-gray-800 text-center">
-              {getPercentage(chartData[activeIndex].value)}
-              <div className="text-sm text-gray-600">
+            <>
+              <div className="text-2xl font-bold text-gray-800">
+                {getPercentage(chartData[activeIndex].value)}
+              </div>
+              <div className="text-sm text-gray-500">
                 {chartData[activeIndex].name}
               </div>
-            </div>
+            </>
           ) : (
-            <div className="text-2xl font-bold text-gray-800 text-center">
-              {total}
-              <div className="text-sm text-gray-600">Tổng</div>
-            </div>
+            <>
+              <div className="text-2xl font-bold text-gray-800">{total}</div>
+              <div className="text-sm text-gray-500">Tổng</div>
+            </>
           )}
         </div>
       </div>
 
-      <div className="space-y-2.5 text-sm">
-        <div
-          className="flex items-center gap-2 cursor-pointer max-w-fit"
-          onMouseEnter={() => setActiveIndex(0)}
-          onMouseLeave={() => setActiveIndex(null)}
-        >
-          <MinusCircleIcon className="w-5 h-5 text-orange-600" />
-          <span className="text-orange-600">Chưa thực hiện: {toDo}</span>
-        </div>
-
-        <div
-          className="flex items-center gap-2 cursor-pointer max-w-fit"
-          onMouseEnter={() => setActiveIndex(1)}
-          onMouseLeave={() => setActiveIndex(null)}
-        >
-          <ArrowPathIcon className="w-5 h-5 text-blue-600" />
-          <span className="text-blue-600">Đang thực hiện: {inProgress}</span>
-        </div>
-
-        <div
-          className="flex items-center gap-2 cursor-pointer max-w-fit"
-          onMouseEnter={() => setActiveIndex(2)}
-          onMouseLeave={() => setActiveIndex(null)}
-        >
-          <CheckCircleIcon className="w-5 h-5 text-pink-600" />
-          <span className="text-pink-600">Đã hoàn thành: {done}</span>
-        </div>
+      <div className="space-y-2 text-sm">
+        {[
+          { icon: MinusCircleIcon, text: 'Chưa thực hiện', value: toDo, color: 'text-orange-600' },
+          { icon: ArrowPathIcon, text: 'Đang thực hiện', value: inProgress, color: 'text-blue-600' },
+          { icon: CheckCircleIcon, text: 'Đã hoàn thành', value: done, color: 'text-pink-600' },
+        ].map(({ icon: Icon, text, value, color }, i) => (
+          <div
+            key={i}
+            className={`flex items-center gap-2 cursor-pointer max-w-fit hover:opacity-80 ${color}`}
+            onMouseEnter={() => setActiveIndex(i)}
+            onMouseLeave={() => setActiveIndex(null)}
+          >
+            <Icon className="w-5 h-5" />
+            <span>
+              {text}: {value}
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );

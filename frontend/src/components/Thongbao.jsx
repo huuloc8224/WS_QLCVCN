@@ -60,40 +60,35 @@ const Thongbao = () => {
   }, []);
 
   return (
-    <div className="h-full p-6 bg-yellow-50/90 border border-yellow-200 rounded-xl shadow relative flex flex-col">
-      <h2 className="text-2xl font-bold mb-4 text-yellow-700 flex items-center gap-2">
+    <div className="h-full p-6 bg-yellow-50 border border-yellow-300 rounded-3xl shadow-xl">
+      <h2 className="text-xl font-semibold text-yellow-700 mb-4 flex items-center gap-2">
+        <BellIcon className="w-6 h-6 text-yellow-500" />
         Thông báo công việc
       </h2>
 
       <div
         ref={contentRef}
-        className="flex-1 pr-1 relative overflow-y-auto"
-        style={{
-          maxHeight: '300px',
-          position: 'relative',
-        }}
+        className="overflow-y-auto max-h-[300px] pr-2 space-y-2"
       >
-        <div className="flex flex-col gap-2">
-          {notifications.map(task => (
-            <div
-              key={`${task.id}-${task.deadline}`}
-              className={`text-sm flex items-start gap-2 p-2 rounded ${
-                task.status === 'done'
-                  ? 'bg-green-50 text-green-700'
-                  : task.diffDays < 0
-                  ? 'bg-red-50 text-red-700 font-medium'
-                  : task.diffDays === 0
-                  ? 'bg-yellow-100 text-yellow-900'
-                  : 'text-gray-700'
-              }`}
-            >
-              <BellIcon className="w-4 h-4 mt-0.5 text-yellow-500 shrink-0" />
-              <div>
-                <span className="font-semibold">"{task.title}"</span> — {task.message}.
-              </div>
+        {notifications.map(task => (
+          <div
+            key={`${task.id}-${task.deadline}`}
+            className={`p-3 rounded-xl text-sm flex gap-2 ${
+              task.status === 'done'
+                ? 'bg-green-100 text-green-700'
+                : task.diffDays < 0
+                ? 'bg-red-100 text-red-700 font-medium'
+                : task.diffDays === 0
+                ? 'bg-yellow-100 text-yellow-900'
+                : 'bg-white text-gray-700 border'
+            }`}
+          >
+            <BellIcon className="w-4 h-4 mt-0.5 text-yellow-500" />
+            <div>
+              <strong>"{task.title}"</strong> — {task.message}.
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   );

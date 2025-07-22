@@ -36,7 +36,7 @@ const PDangky = () => {
 
       if (res?.data?.user?.name) {
         localStorage.setItem('userName', res.data.user.name);
-        setUserName(res.data.user.name); // cập nhật context
+        setUserName(res.data.user.name);
       }
 
       if (res?.data?.token) {
@@ -52,52 +52,56 @@ const PDangky = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-300">
-      <div className="w-[350px] h-[500px] p-6 bg-white rounded-xl shadow-lg flex flex-col items-center relative">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-blue-50 px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 relative">
         <button
           onClick={() => navigate('/')}
-          className="absolute top-4 left-4 text-gray-700 hover:text-black transition"
+          className="absolute top-4 left-4 text-gray-500 hover:text-blue-600 transition"
           title="Quay lại"
         >
-          <ArrowLeftIcon className="w-6 h-6 cursor-pointer" />
+          <ArrowLeftIcon className="w-6 h-6" />
         </button>
 
-        <div className="w-32 h-32 rounded-full flex items-center justify-center mb-6 overflow-hidden">
-          <img src={logo} alt="Logo" className="w-full h-full object-cover" />
+        <div className="flex flex-col items-center mb-6">
+          <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-blue-300 mb-3">
+            <img src={logo} alt="Logo" className="w-full h-full object-cover" />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-800 text-center">Tạo tài khoản mới</h2>
         </div>
 
-        <form onSubmit={handleRegister} className="w-full flex flex-col items-center">
-          <input 
+        <form onSubmit={handleRegister} className="space-y-4">
+          <input
             type="text"
-            placeholder="Họ tên"
-            className="border border-gray-400 rounded px-3 py-2 w-full mb-3"
+            placeholder="Họ và tên"
+            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={fullname}
             onChange={(e) => setFullname(e.target.value)}
           />
-          <input 
+          <input
             type="email"
             placeholder="Email đăng nhập"
-            className="border border-gray-400 rounded px-3 py-2 w-full mb-4"
+            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <input 
+          <input
             type="password"
             placeholder="Mật khẩu"
-            className="border border-gray-400 rounded px-3 py-2 w-full mb-3"
+            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <input 
+          <input
             type="password"
-            placeholder="Nhập lại mật khẩu"
-            className="border border-gray-400 rounded px-3 py-2 w-full mb-3"
+            placeholder="Xác nhận mật khẩu"
+            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
+
           <button
             type="submit"
-            className="bg-blue-500 text-white font-semibold py-3 mt-5 w-full rounded hover:bg-blue-600 transition"
+            className="w-full bg-blue-500 text-white font-semibold py-3 rounded hover:bg-blue-600 transition"
           >
             Tạo tài khoản
           </button>

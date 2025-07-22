@@ -8,7 +8,7 @@ const PDangnhap = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { setUserName } = useContext(UserContext); // ← Lấy context để set tên
+  const { setUserName } = useContext(UserContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,18 +21,13 @@ const PDangnhap = () => {
     try {
       const res = await authApi.login({ email, password });
 
-      // Backend trả về user.name → ta dùng đúng key này
       const user = res.data.user;
-
       localStorage.setItem('token', res.data.token);
-      localStorage.setItem('userName', user.name); // ← DÙNG name thay vì fullname
-      setUserName(user.name);                      // ← cập nhật UserContext
+      localStorage.setItem('userName', user.name);
+      setUserName(user.name);
 
       alert('Đăng nhập thành công!');
       navigate('/tongquan');
-
-      // Nếu cần cập nhật lại toàn bộ layout ngay sau login:
-      // window.location.reload();
     } catch (err) {
       console.error('Đăng nhập lỗi:', err);
       alert('Sai email hoặc mật khẩu hoặc lỗi server');
@@ -40,59 +35,53 @@ const PDangnhap = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-300">
-      <div className="w-[350px] h-[500px] p-6 bg-white rounded-xl shadow-lg flex flex-col items-center">
-        
-        {/* Logo */}
-        <div className="w-32 h-32 rounded-full flex items-center justify-center mb-6 overflow-hidden">
-          <img 
-            src={logo}
-            alt="Logo"
-            className="w-full h-full object-cover"
-          />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-blue-50 px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center">
+
+        <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-blue-300 mb-4">
+          <img src={logo} alt="Logo" className="w-full h-full object-cover" />
         </div>
 
-        {/* Form đăng nhập */}
-        <form onSubmit={handleLogin} className="w-full flex flex-col items-center">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">Đăng nhập hệ thống</h2>
+
+        <form onSubmit={handleLogin} className="w-full space-y-4">
           <input 
             type="email"
             placeholder="Email"
-            className="border border-gray-400 rounded px-3 py-2 w-full mb-3"
+            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input 
             type="password"
             placeholder="Mật khẩu"
-            className="border border-gray-400 rounded px-3 py-2 w-full mb-4"
+            className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
 
           <button
             type="submit"
-            className="bg-blue-500 text-white font-semibold py-2 w-full rounded hover:bg-blue-600 transition mt-5"
+            className="w-full bg-blue-500 text-white font-semibold py-2 rounded hover:bg-blue-600 transition"
           >
             Đăng nhập
           </button>
         </form>
 
-        {/* Các nút điều hướng khác */}
-        <div className="flex justify-between items-center w-full mt-20">
+        <div className="flex justify-between items-center w-full mt-6 text-sm">
           <button 
-            className="bg-gray-500 text-white px-3 py-1 rounded text-sm cursor-pointer"
+            className="text-blue-600 hover:underline"
             onClick={() => navigate('/dangky')}
           >
             Tạo tài khoản
           </button>
           <button
             onClick={() => navigate('/quenmatkhau')}
-            className="text-sm text-blue-600 hover:underline"
+            className="text-blue-600 hover:underline"
           >
             Quên mật khẩu?
           </button>
         </div>
-
       </div>
     </div>
   );

@@ -37,7 +37,7 @@ exports.getTypejob = async (req, res) => {
 
 // Cập nhật Typejob
 exports.updateTypejob = async (req, res) => {
-  const id = parseInt(req.params.id, 10);
+  const id = req.params.id; // ❌ Bỏ parseInt
   const { name } = req.body;
 
   if (!name || typeof name !== 'string' || name.length > 50) {
@@ -64,11 +64,7 @@ exports.updateTypejob = async (req, res) => {
 
 // Xóa Typejob
 exports.deleteTypejob = async (req, res) => {
-  const id = parseInt(req.params.id, 10);
-
-  if (isNaN(id)) {
-    return res.status(400).json({ message: 'ID không hợp lệ' });
-  }
+  const id = req.params.id; // ❌ Bỏ parseInt
 
   try {
     const deleted = await Typejob.findOneAndDelete({ _id: id });

@@ -136,36 +136,38 @@ const CongViec = () => {
 
   return (
     <div className="p-8">
-      <h1 className="text-xl font-bold text-blue-700 mb-4">CÔNG VIỆC</h1>
+      <h1 className="text-2xl font-bold text-blue-700 mb-6 tracking-wide">QUẢN LÝ CÔNG VIỆC</h1>
 
       {/* Form tạo/sửa */}
-      <div className="bg-white border rounded-xl p-6 shadow-lg mb-8" ref={formRef}>
-        <h2 className="text-xl font-semibold text-blue-600 mb-4 text-center">
+      <div className="bg-white border border-blue-100 rounded-2xl p-6 shadow-xl mb-10" ref={formRef}>
+        <h2 className="text-xl font-semibold text-blue-600 mb-6 text-center tracking-tight uppercase">
           {editingTask ? 'Chỉnh sửa công việc' : 'Thêm công việc mới'}
         </h2>
 
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Tên công việc */}
           <div>
-            <label className="block text-sm font-medium">Tên công việc</label>
+            <label className="block text-sm font-semibold text-gray-600 mb-1">Tên công việc</label>
             <input
               ref={tenCongViecRef}
               type="text"
               value={currentTask.name}
               onChange={(e) => setCurrentTask({ ...currentTask, name: e.target.value })}
-              className="w-full border p-2 rounded"
+              className="w-full border-gray-300 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition placeholder-gray-400"
               placeholder="Nhập tên công việc"
             />
           </div>
 
+          {/* Loại công việc */}
           <div>
-            <label className="block text-sm font-medium">Loại công việc</label>
+            <label className="block text-sm font-semibold text-gray-600 mb-1">Loại công việc</label>
             <input
               type="text"
               list="category-options"
               value={currentTask.category}
               onChange={(e) => setCurrentTask({ ...currentTask, category: e.target.value })}
-              className="w-full border p-2 rounded"
-              placeholder="Chọn hoặc nhập loại công việc"
+              className="w-full border-gray-300 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition placeholder-gray-400"
+              placeholder="Nhập hoặc chọn loại công việc"
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   e.preventDefault();
@@ -181,32 +183,35 @@ const CongViec = () => {
             </datalist>
           </div>
 
+          {/* Ngày bắt đầu */}
           <div>
-            <label className="block text-sm font-medium">Ngày bắt đầu</label>
+            <label className="block text-sm font-semibold text-gray-600 mb-1">Ngày bắt đầu</label>
             <input
               type="date"
               value={currentTask.startDate}
               onChange={(e) => setCurrentTask({ ...currentTask, startDate: e.target.value })}
-              className="w-full border p-2 rounded"
+              className="w-full border-gray-300 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
             />
           </div>
 
+          {/* Ngày kết thúc */}
           <div>
-            <label className="block text-sm font-medium">Ngày kết thúc</label>
+            <label className="block text-sm font-semibold text-gray-600 mb-1">Ngày kết thúc</label>
             <input
               type="date"
               value={currentTask.endDate}
               onChange={(e) => setCurrentTask({ ...currentTask, endDate: e.target.value })}
-              className="w-full border p-2 rounded"
+              className="w-full border-gray-300 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
             />
           </div>
 
+          {/* Trạng thái */}
           <div>
-            <label className="block text-sm font-medium">Trạng thái</label>
+            <label className="block text-sm font-semibold text-gray-600 mb-1">Trạng thái</label>
             <select
               value={currentTask.status}
               onChange={(e) => setCurrentTask({ ...currentTask, status: e.target.value })}
-              className="w-full border p-2 rounded"
+              className="w-full border-gray-300 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
             >
               <option>Chưa thực hiện</option>
               <option>Đang thực hiện</option>
@@ -214,23 +219,25 @@ const CongViec = () => {
             </select>
           </div>
 
+          {/* Mô tả */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium">Mô tả</label>
+            <label className="block text-sm font-semibold text-gray-600 mb-1">Mô tả</label>
             <textarea
               value={currentTask.description}
               onChange={(e) => setCurrentTask({ ...currentTask, description: e.target.value })}
-              className="w-full border p-2 rounded h-[80px]"
-              placeholder="Nhập mô tả"
+              className="w-full border-gray-300 border rounded-lg px-3 py-2 h-24 focus:outline-none focus:ring-2 focus:ring-blue-400 transition placeholder-gray-400"
+              placeholder="Nhập mô tả chi tiết"
             />
           </div>
         </div>
 
+        {/* Nút hành động */}
         <div className="flex justify-end mt-6 gap-4">
           <button
             onClick={handleSaveTask}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded flex items-center"
+            className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold px-5 py-2 rounded-lg transition shadow"
           >
-            <PlusIcon className="w-5 h-5 mr-2" />
+            <PlusIcon className="w-5 h-5 inline-block mr-2" />
             {editingTask ? 'Lưu công việc' : 'Thêm công việc'}
           </button>
 
@@ -240,7 +247,7 @@ const CongViec = () => {
                 setEditingTask(null);
                 setCurrentTask(initialTaskState);
               }}
-              className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded"
+              className="bg-gray-400 hover:bg-gray-500 text-white font-semibold px-4 py-2 rounded-lg transition"
             >
               Huỷ
             </button>
@@ -253,7 +260,7 @@ const CongViec = () => {
         <select
           value={filters.category}
           onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-          className="border p-2 rounded"
+          className="border p-2 rounded-lg shadow-sm focus:outline-none"
         >
           <option value="">-- Lọc theo loại --</option>
           {categories.map((cat, i) => (
@@ -264,7 +271,7 @@ const CongViec = () => {
         <select
           value={filters.status}
           onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-          className="border p-2 rounded"
+          className="border p-2 rounded-lg shadow-sm focus:outline-none"
         >
           <option value="">-- Lọc theo trạng thái --</option>
           <option>Chưa thực hiện</option>
@@ -276,24 +283,24 @@ const CongViec = () => {
           type="date"
           value={filters.date}
           onChange={(e) => setFilters({ ...filters, date: e.target.value })}
-          className="border p-2 rounded"
+          className="border p-2 rounded-lg shadow-sm focus:outline-none"
         />
       </div>
 
       {/* Danh sách công việc */}
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="grid md:grid-cols-2 gap-6">
         {filteredTasks.length === 0 ? (
-          <div className="text-center text-gray-500 col-span-2 py-8">
+          <div className="text-center text-gray-400 col-span-2 py-10 text-lg italic">
             Không có công việc nào phù hợp với bộ lọc.
           </div>
         ) : (
           filteredTasks.map(task => (
-            <div key={task._id} className="border p-4 rounded shadow hover:shadow-lg">
-              <h2 className="text-xl font-semibold text-blue-600">{task.title}</h2>
-              <p className="text-gray-600">Loại: {task.typejob?.name}</p>
-              <p className="text-gray-600">Từ: {task.start_date?.slice(0, 10)} - đến: {task.due_date?.slice(0, 10)}</p>
-              <p className="text-gray-600">
-                Trạng thái:
+            <div key={task._id} className="border rounded-2xl p-5 shadow-lg hover:shadow-2xl transition bg-white">
+              <h2 className="text-lg font-bold text-blue-700">{task.title}</h2>
+              <p className="text-sm text-gray-500 mt-1">📁 Loại: {task.typejob?.name}</p>
+              <p className="text-sm text-gray-500">📅 Từ: {task.start_date?.slice(0, 10)} → {task.due_date?.slice(0, 10)}</p>
+              <p className="text-sm mt-1">
+                🟢 Trạng thái:
                 <span className={`ml-1 font-semibold ${
                   task.status === 'done' ? 'text-green-600' :
                   task.status === 'in_progress' ? 'text-yellow-600' :
@@ -302,8 +309,8 @@ const CongViec = () => {
                   {mapStatusReverse[task.status]}
                 </span>
               </p>
-              <p className="mt-2 text-gray-700">{task.description}</p>
-              <div className="flex gap-2 mt-3">
+              <p className="mt-3 text-gray-700 text-sm">{task.description}</p>
+              <div className="flex gap-3 mt-4">
                 <button
                   onClick={() => {
                     setEditingTask({
@@ -320,15 +327,15 @@ const CongViec = () => {
                       formRef.current?.scrollIntoView({ behavior: 'smooth' });
                     }, 100);
                   }}
-                  className="bg-yellow-400 text-white p-1 rounded"
+                  className="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded-lg shadow"
                 >
-                  <PencilIcon className="w-4 h-4" />
+                  <PencilIcon className="w-4 h-4 inline-block" />
                 </button>
                 <button
                   onClick={() => handleDeleteTask(task._id)}
-                  className="bg-red-500 text-white p-1 rounded"
+                  className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg shadow"
                 >
-                  <TrashIcon className="w-4 h-4" />
+                  <TrashIcon className="w-4 h-4 inline-block" />
                 </button>
               </div>
             </div>
@@ -338,6 +345,7 @@ const CongViec = () => {
 
       <div className="h-20" />
     </div>
+
   );
 };
 

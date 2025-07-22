@@ -48,65 +48,27 @@ const Tongquan = () => {
   }, []);
 
   return (
-    <div className="flex flex-col h-auto">
-      {/* Phần thống kê trên */}
-      <div className="p-6">
-        <div className="text-xl ml-2 mt-2 font-bold text-blue-700">
-          TỔNG QUAN
-        </div>
-        <hr className="border-t-2 border-gray-300/30 my-4 mx-4" />
+    <div className="flex flex-col h-auto p-6">
+      <h2 className="text-2xl font-bold text-blue-800 mb-6">TỔNG QUAN</h2>
 
-        <div className="flex flex-wrap justify-center gap-4 sm:gap-6 items-center">
-          {/* Card 1: loại công việc */}
-          <nav className="w-26 sm:w-44 h-14 bg-green-700 flex justify-center items-center rounded-xl shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
-            <div className="flex flex-col items-center">
-              <p className="text-sm sm:text-base text-white">Loại công việc</p>
-              <p className="text-xl sm:text-2xl font-bold text-white">
-                <CountUp end={totalTypes} duration={2} />
-              </p>
-            </div>
-          </nav>
-
-          {/* Card 2: tổng công việc */}
-          <nav className="w-26 sm:w-44 h-14 bg-red-700 flex justify-center items-center rounded-xl shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
-            <div className="flex flex-col items-center">
-              <p className="text-sm sm:text-base text-white">Số lượng công việc</p>
-              <p className="text-xl sm:text-2xl font-bold text-white">
-                <CountUp end={totalJobs} duration={2} />
-              </p>
-            </div>
-          </nav>
-
-          {/* Card 3: chưa thực hiện */}
-          <nav className="w-26 sm:w-32 h-14 bg-amber-500 flex justify-center items-center rounded-xl shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
-            <div className="flex flex-col items-center">
-              <p className="text-xs sm:text-sm text-white">Chưa thực hiện</p>
-              <p className="text-lg sm:text-xl font-bold text-white">
-                <CountUp end={todoCount} duration={2} />
-              </p>
-            </div>
-          </nav>
-
-          {/* Card 4: đang thực hiện */}
-          <nav className="w-26 sm:w-32 h-14 bg-blue-700 flex justify-center items-center rounded-xl shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
-            <div className="flex flex-col items-center">
-              <p className="text-xs sm:text-sm text-white">Đang thực hiện</p>
-              <p className="text-lg sm:text-xl font-bold text-white">
-                <CountUp end={inProgressCount} duration={2} />
-              </p>
-            </div>
-          </nav>
-
-          {/* Card 5: đã hoàn thành */}
-          <nav className="w-26 sm:w-32 h-14 bg-pink-700 flex justify-center items-center rounded-xl shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
-            <div className="flex flex-col items-center">
-              <p className="text-xs sm:text-sm text-white">Đã hoàn thành</p>
-              <p className="text-lg sm:text-xl font-bold text-white">
-                <CountUp end={doneCount} duration={2} />
-              </p>
-            </div>
-          </nav>
-        </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        {[
+          { label: 'Loại công việc', count: totalTypes, bg: 'bg-green-600' },
+          { label: 'Số lượng công việc', count: totalJobs, bg: 'bg-red-600' },
+          { label: 'Chưa thực hiện', count: todoCount, bg: 'bg-amber-500' },
+          { label: 'Đang thực hiện', count: inProgressCount, bg: 'bg-blue-500' },
+          { label: 'Đã hoàn thành', count: doneCount, bg: 'bg-pink-600' },
+        ].map((item, index) => (
+          <div
+            key={index}
+            className={`rounded-2xl shadow-md p-4 text-white flex flex-col items-center justify-center hover:scale-105 transform transition-all duration-300 ${item.bg}`}
+          >
+            <p className="text-sm md:text-base">{item.label}</p>
+            <p className="text-xl md:text-2xl font-bold">
+              <CountUp end={item.count} duration={2} />
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );
