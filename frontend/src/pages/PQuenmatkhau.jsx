@@ -9,8 +9,7 @@ const PQuenmatkhau = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Gọi API gửi email ở đây
-      // await authApi.forgotPassword(email);
+      await authApi.forgotPassword({ email });
       setMessage('Đã gửi mã xác nhận tới email của bạn!');
       setError('');
     } catch {
