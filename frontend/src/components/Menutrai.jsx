@@ -38,6 +38,13 @@ const Menutrai = () => {
 
   const isActive = (path) => location.pathname === path;
 
+  const navItemClass = (path) =>
+    `px-3 py-1 rounded transition ${
+      isActive(path)
+        ? 'bg-white/20 border-b-2 border-yellow-300 font-semibold text-yellow-300'
+        : 'hover:text-yellow-300'
+    }`;
+
   return (
     <div className="fixed top-0 left-0 w-full h-16 bg-gradient-to-r from-blue-900 to-blue-600 text-white shadow z-50 px-6 flex items-center justify-between">
       {/* Logo */}
@@ -48,36 +55,16 @@ const Menutrai = () => {
 
       {/* Menu Navigation */}
       <div className="flex gap-6 text-sm font-medium">
-        <button
-          onClick={() => navigate('/tongquan')}
-          className={`transition ${
-            isActive('/tongquan') ? 'text-yellow-300 font-semibold underline' : 'hover:text-yellow-300'
-          }`}
-        >
+        <button onClick={() => navigate('/tongquan')} className={navItemClass('/tongquan')}>
           Tổng Quan
         </button>
-        <button
-          onClick={() => navigate('/loaicongviec')}
-          className={`transition ${
-            isActive('/loaicongviec') ? 'text-yellow-300 font-semibold underline' : 'hover:text-yellow-300'
-          }`}
-        >
+        <button onClick={() => navigate('/loaicongviec')} className={navItemClass('/loaicongviec')}>
           Loại Công Việc
         </button>
-        <button
-          onClick={() => navigate('/congviec')}
-          className={`transition ${
-            isActive('/congviec') ? 'text-yellow-300 font-semibold underline' : 'hover:text-yellow-300'
-          }`}
-        >
+        <button onClick={() => navigate('/congviec')} className={navItemClass('/congviec')}>
           Công Việc
         </button>
-        <button
-          onClick={() => navigate('/lichsu')}
-          className={`transition ${
-            isActive('/lichsu') ? 'text-yellow-300 font-semibold underline' : 'hover:text-yellow-300'
-          }`}
-        >
+        <button onClick={() => navigate('/lichsu')} className={navItemClass('/lichsu')}>
           Nhật Ký Thay Đổi
         </button>
       </div>
