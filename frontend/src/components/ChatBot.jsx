@@ -1,17 +1,75 @@
+import { useState } from "react";
 import { Chatbot } from "react-chatbot-kit";
 import "react-chatbot-kit/build/main.css";
 import MessageParser from "../Chatbot/MessageParser";
 import ActionProvider from "../Chatbot/ActionProvider";
 import config from "../Chatbot/ChatBotConfig";
+import { FaComments, FaTimes } from "react-icons/fa";
 
 function ChatBot() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div style={{ position: "fixed", bottom: 20, right: 20, zIndex: 1000 }}>
-      <Chatbot
-        config={config}
-        messageParser={MessageParser}
-        actionProvider={ActionProvider}
-      />
+      {isOpen ? (
+        <div
+          style={{
+            width: 370,
+            height: 500,
+            borderRadius: 12,
+            overflow: "hidden",
+            boxShadow: "0 8px 20px rgba(0, 0, 0, 0.2)",
+            backgroundColor: "white",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {/* Tiêu đề */}
+          <div
+            style={{
+              backgroundColor: "#3b82f6",
+              color: "white",
+              padding: "10px 16px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              fontWeight: "bold",
+              fontSize: "16px",
+            }}
+          >
+            Trợ Lý Công việc
+            <FaTimes
+              style={{ cursor: "pointer" }}
+              onClick={() => setIsOpen(false)}
+            />
+          </div>
+
+          {/* Chatbot */}
+          <div style={{ flex: 1 }}>
+            <Chatbot
+              config={config}
+              messageParser={MessageParser}
+              actionProvider={ActionProvider}
+            />
+          </div>
+        </div>
+      ) : (
+        // Icon mở chat
+        <button
+          onClick={() => setIsOpen(true)}
+          style={{
+            backgroundColor: "#3b82f6",
+            color: "white",
+            border: "none",
+            borderRadius: "50%",
+            padding: "16px",
+            cursor: "pointer",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+          }}
+        >
+          <FaComments size={20} />
+        </button>
+      )}
     </div>
   );
 }
