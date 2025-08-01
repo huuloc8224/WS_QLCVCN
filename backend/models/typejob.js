@@ -6,12 +6,12 @@ const Counter = require('./counter');
 const TypejobSchema = new mongoose.Schema({
   _id: Number,
   name: { type: String, maxlength: 50, required: true },
-  owner: { type: Number, ref: 'User', required: true } // thêm dòng này
+  owner: { type: Number, ref: 'User', required: true } 
 });
 
 TypejobSchema.index({ name: 1, owner: 1 }, { unique: true });
 
-let tempCounter = null; // Lưu ID vừa cấp để rollback nếu lỗi
+let tempCounter = null; 
 
 // Tự động tăng ID trước khi lưu
 TypejobSchema.pre('save', async function (next) {
