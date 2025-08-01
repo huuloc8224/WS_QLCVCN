@@ -14,7 +14,8 @@ function ChatBot() {
       {isOpen ? (
         <div
           style={{
-            width: 370,
+            width: "90vw",
+            maxWidth: 370,  
             height: 500,
             borderRadius: 12,
             overflow: "hidden",
