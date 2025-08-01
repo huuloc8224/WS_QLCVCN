@@ -4,7 +4,8 @@ const chatbotHandler = require('../utils/chatbotHandler');
 const auth = require('../middlewares/auth.middleware');
 
 router.use(auth);
-
+router.post('/chatbot', authMiddleware, chatbotController)
 router.post('/', chatbotHandler);
+
 
 module.exports = router;
