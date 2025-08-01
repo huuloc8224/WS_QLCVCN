@@ -4,23 +4,26 @@ class ActionProvider {
     this.setState = setStateFunc;
   }
 
-  async handleUserMessage(message) {
+  async handleMessage(message) {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/chatbot`, {
+      const res = await fetch("https://be-qlcvcn.onrender.com/api/chatbot", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message, userId: "ID_HARD_CODE" })
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message })
       });
 
       const data = await res.json();
+
       const botMessage = this.createChatBotMessage(data.reply);
-      this.setState(prev => ({
+      this.setState((prev) => ({
         ...prev,
         messages: [...prev.messages, botMessage]
       }));
-    } catch {
-      const errorMessage = this.createChatBotMessage("Lỗi máy chủ!");
-      this.setState(prev => ({
+    } catch (err) {
+      const errorMessage = this.createChatBotMessage("Lỗi kết nối tới server.");
+      this.setState((prev) => ({
         ...prev,
         messages: [...prev.messages, errorMessage]
       }));
