@@ -25,35 +25,13 @@ function ChatBot() {
             flexDirection: "column",
           }}
         >
-          {/* Tiêu đề */}
-          <div
-            style={{
-              backgroundColor: "#3b82f6",
-              color: "white",
-              padding: "10px 16px",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              fontWeight: "bold",
-              fontSize: "16px",
-            }}
-          >
-            Trợ Lý Công việc
-            <FaTimes
-              style={{ cursor: "pointer" }}
-              onClick={() => setIsOpen(false)}
-            />
-          </div>
-
           {/* Chatbot */}
           <div style={{ flex: 1 }}>
             <Chatbot
               config={config}
               messageParser={MessageParser}
               actionProvider={ActionProvider}
-              customComponents={{
-                header: () => null,
-              }}
+              customComponents={{header: () => null,}}
               customStyles={{
                 botMessageBox: { maxWidth: "90%" },
                 userMessageBox: { maxWidth: "90%" },
