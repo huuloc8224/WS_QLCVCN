@@ -26,6 +26,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/typejob', typejobRoutes);
 app.use('/api/job', jobRoutes); 
 app.use('/api/logs', logRoutes);
+app.use('/api/chatbot', require('./routes/chatbot.routes'))
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+require('./utils/remindJob')
