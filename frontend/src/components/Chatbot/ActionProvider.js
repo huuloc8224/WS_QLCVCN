@@ -6,7 +6,7 @@ class ActionProvider {
 
   async handleUserMessage(message) {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/chatbot`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/chatbot`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message, userId: "ID_HARD_CODE" })
