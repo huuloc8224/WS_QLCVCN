@@ -7,36 +7,43 @@ module.exports = async (req, res) => {
 
   try {
     // Tạo loại công việc
-    if (msg.includes('tạo loại')) {
-      const name = msg.split('tạo loại')[1].trim()
-      const exists = await TypeJob.findOne({ name })
-      if (exists) return res.json({ reply: `Loại "${name}" đã tồn tại.` })
-
-      const newType = await TypeJob.create({ name })
-      return res.json({ reply: `Đã tạo loại công việc: ${newType.name}` })
-    }
+    const type = await TypeJob.findOne({ name: typeName.trim() });
+if (!type) {
+  const newType = await TypeJob.create({
+    name: typeName.trim(),
+    owner: "CHATBOT_OWNER_ID", // Thay bằng _id của user nào đó mặc định
+  });
+}
 
     // Tạo công việc: "tạo công việc abc thuộc loại xyz hết hạn 10/08/2025"
-    if (msg.includes('tạo công việc')) {
-      const regex = /tạo công việc (.*?) thuộc loại (.*?) hết hạn (.*)/
-      const [, title, typeName, deadlineStr] = msg.match(regex) || []
+if (msg.includes('tạo công việc')) {
+  const regex = /tạo công việc (.*?) thuộc loại (.*?) hết hạn (.*)/i;
+  const match = msg.match(regex);
 
-      const type = await TypeJob.findOne({ name: typeName.trim() })
-      if (!type) return res.json({ reply: `Loại "${typeName}" không tồn tại.` })
+  if (!match) {
+    return res.json({ reply: 'Cú pháp không đúng. Hãy nhập: "tạo công việc [tên] thuộc loại [loại] hết hạn [dd/mm/yyyy]"' });
+  }
 
-      const deadline = moment(deadlineStr, 'DD/MM/YYYY').toDate()
+  const [, title, typeName, deadlineStr] = match;
 
-      const job = await Job.create({
-        title,
-        deadline,
-        typeJob: type._id,
-        status: 'pending',
-        description: '',
-        createdAt: new Date()
-      })
+  const type = await TypeJob.findOne({ name: typeName.trim() });
+  if (!type) return res.json({ reply: `Loại "${typeName}" không tồn tại.` });
 
-      return res.json({ reply: `Đã tạo công việc "${title}" hết hạn ngày ${deadlineStr}` })
-    }
+  const deadline = moment(deadlineStr, 'DD/MM/YYYY', true);
+  if (!deadline.isValid()) return res.json({ reply: `Ngày hết hạn "${deadlineStr}" không hợp lệ. Định dạng đúng: dd/mm/yyyy` });
+
+  const job = await Job.create({
+    title,
+    deadline: deadline.toDate(),
+    typeJob: type._id,
+    status: 'pending',
+    description: '',
+    createdAt: new Date()
+  });
+
+  return res.json({ reply: `Đã tạo công việc "${title}" hết hạn ngày ${deadlineStr}` });
+}
+
 
     // Tổng hợp công việc theo ngày
     if (msg.includes('tổng hợp ngày')) {
