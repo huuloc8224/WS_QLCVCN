@@ -64,12 +64,12 @@ module.exports = async (req, res) => {
       const jobs = await Job.find(filter).populate('typejob');
 
       if (jobs.length === 0) {
-        return res.json({ reply: '📭 Hôm nay không có công việc nào.' });
+        return res.json({ reply: '📭 Hôm nay không có công việc nào hạn cuối.' });
       }
 
       const list = jobs.map(job => `- ${job.title} (${job.typejob.name})`).join('\n');
       return res.json({
-        reply: `📌 Hôm nay có ${jobs.length} công việc:\n${list}`
+        reply: `📌 Hôm nay có ${jobs.length} công việc hạn cuối:\n${list}`
       });
     }
 
