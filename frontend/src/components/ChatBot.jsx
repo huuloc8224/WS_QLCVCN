@@ -50,11 +50,18 @@ function ChatBot() {
               config={config}
               messageParser={MessageParser}
               actionProvider={ActionProvider}
+              customComponents={{
+                header: () => null,
+              }}
+              customStyles={{
+                botMessageBox: { maxWidth: "90%" },
+                userMessageBox: { maxWidth: "90%" },
+                chatButton: { display: "none" }, // ẩn nút nếu có
+              }}
             />
           </div>
         </div>
       ) : (
-        // Icon mở chat
         <button
           onClick={() => setIsOpen(true)}
           style={{
