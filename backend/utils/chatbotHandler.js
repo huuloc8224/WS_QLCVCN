@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
   const msg = req.body.message.toLowerCase()
 
   try {
-    // Tạo công việc: "tạo công việc abc thuộc loại xyz hết hạn 10/08/2025"
+    // Tạo công việc
     if (msg.includes('tạo công việc')) {
       const regex = /tạo công việc (.*?) thuộc loại (.*?) hết hạn (.*)/i;
       const match = msg.match(regex);
@@ -17,12 +17,12 @@ module.exports = async (req, res) => {
 
       const [, title, typeName, deadlineStr] = match;
 
-      // Tìm loại công việc, nếu chưa có thì tạo mới
-      let type = await TypeJob.findOne({ name: typeName.trim() });
+      // Tìm loại công việc theo tên + owner
+      let type = await TypeJob.findOne({ name: typeName.trim(), owner: req.user.id });
       if (!type) {
         type = await TypeJob.create({
           name: typeName.trim(),
-          owner: "CHATBOT_OWNER_ID", // ID mặc định hoặc gán từ người dùng
+          owner: req.user.id,
         });
       }
 
@@ -37,18 +37,20 @@ module.exports = async (req, res) => {
         typeJob: type._id,
         status: 'pending',
         description: '',
+        owner: req.user.id, // ✅ Thêm owner ở đây
         createdAt: new Date()
       });
 
       return res.json({ reply: `Đã tạo công việc "${title}" thuộc loại "${type.name}" hết hạn ngày ${deadlineStr}` });
     }
 
-    // Tổng hợp công việc theo ngày
+    // Tổng hợp công việc hôm nay
     if (msg.includes('tổng hợp ngày')) {
       const today = moment().startOf('day')
       const tomorrow = moment(today).add(1, 'day')
       const jobs = await Job.find({
-        deadline: { $gte: today.toDate(), $lt: tomorrow.toDate() }
+        deadline: { $gte: today.toDate(), $lt: tomorrow.toDate() },
+        owner: req.user.id // ✅ Chỉ lấy việc của user hiện tại
       }).populate('typeJob')
 
       if (jobs.length === 0) return res.json({ reply: 'Hôm nay không có công việc nào.' })
