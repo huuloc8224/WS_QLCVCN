@@ -31,15 +31,16 @@ module.exports = async (req, res) => {
         return res.json({ reply: `Ngày hết hạn "${deadlineStr}" không hợp lệ. Đúng định dạng: dd/mm/yyyy` });
       }
 
-      const job = await Job.create({
+     const job = await Job.create({
         title,
+        description: '',
+        start_date: new Date(), // hoặc cho phép nhập luôn nếu muốn
         due_date: deadline.toDate(),
-        start_date: new Date(),
-        status: 'chưa làm',
-        typejob: type._id,
+        typejob: type._id, // type phải là object trả về từ Typejob.findOne()
+        status: 'todo',
         owner: req.user.id,
-        createdAt: new Date()
       });
+
 
       return res.json({ reply: `✅ Đã tạo công việc "${title}" thuộc loại "${type.name}" hết hạn ${deadlineStr}` });
     }
