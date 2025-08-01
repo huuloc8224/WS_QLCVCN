@@ -33,12 +33,12 @@ module.exports = async (req, res) => {
 
       const job = await Job.create({
         title,
-        deadline: deadline.toDate(),
-        typeJob: type._id,
-        status: 'pending',
-        description: '',
-        createdAt: new Date(),
-        owner: req.user?.id || 'CHATBOT_OWNER_ID'
+        due_date: deadline.toDate(),
+        start_date: new Date(),
+        status: 'chưa làm',
+        typejob: type._id,
+        owner: req.user.id,
+        createdAt: new Date()
       });
 
       return res.json({ reply: `✅ Đã tạo công việc "${title}" thuộc loại "${type.name}" hết hạn ${deadlineStr}` });
